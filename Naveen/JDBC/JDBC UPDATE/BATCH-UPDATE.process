@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>JDBC/JDBC UPDATE/BATCH-UPDATE.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>176</pd:startX>
+    <pd:startY>97</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>519</pd:endX>
+    <pd:endY>97</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1658333454214</pd:targetNamespace>
+    <pd:activity name="JDBC Update Parameters">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>329</pd:x>
+        <pd:y>102</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>INSERT INTO CUSTOMER VALUES(?,?,?,?,?,?)</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>ID</parameterName>
+                    <dataType>NUMERIC</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>DESIGNATION</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>LOCATION</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>EXPERIANCE</parameterName>
+                    <dataType>NUMERIC</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>VACCIANATION</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <batchUpdate>true</batchUpdate>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <Record>
+                    <ID>
+                        <xsl:value-of select="'129'"/>
+                    </ID>
+                    <NAME>
+                        <xsl:value-of select="'YUVARAJ'"/>
+                    </NAME>
+                    <DESIGNATION>
+                        <xsl:value-of select="'CRK'"/>
+                    </DESIGNATION>
+                    <LOCATION>
+                        <xsl:value-of select="'AHAMADBAD'"/>
+                    </LOCATION>
+                    <EXPERIANCE>
+                        <xsl:value-of select="'8'"/>
+                    </EXPERIANCE>
+                    <VACCIANATION>
+                        <xsl:value-of select="'Y'"/>
+                    </VACCIANATION>
+                </Record>
+                <Record>
+                    <ID>
+                        <xsl:value-of select="'130'"/>
+                    </ID>
+                    <NAME>
+                        <xsl:value-of select="'YUVARAJ'"/>
+                    </NAME>
+                    <DESIGNATION>
+                        <xsl:value-of select="'CRK'"/>
+                    </DESIGNATION>
+                    <LOCATION>
+                        <xsl:value-of select="'AHAMADBAD'"/>
+                    </LOCATION>
+                    <EXPERIANCE>
+                        <xsl:value-of select="'8'"/>
+                    </EXPERIANCE>
+                    <VACCIANATION>
+                        <xsl:value-of select="'N'"/>
+                    </VACCIANATION>
+                </Record>
+                <Record>
+                    <ID>
+                        <xsl:value-of select="'196'"/>
+                    </ID>
+                    <NAME>
+                        <xsl:value-of select="'SACHIN'"/>
+                    </NAME>
+                    <DESIGNATION>
+                        <xsl:value-of select="'CRK'"/>
+                    </DESIGNATION>
+                    <LOCATION>
+                        <xsl:value-of select="'MUMBAI'"/>
+                    </LOCATION>
+                    <EXPERIANCE>
+                        <xsl:value-of select="'8'"/>
+                    </EXPERIANCE>
+                    <VACCIANATION>
+                        <xsl:value-of select="'Y'"/>
+                    </VACCIANATION>
+                </Record>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>JDBC Update Parameters</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update Parameters</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

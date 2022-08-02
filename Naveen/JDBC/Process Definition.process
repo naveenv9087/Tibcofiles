@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <pd:name>JDBC/Process Definition.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1658406614317</pd:targetNamespace>
+    <pd:activity name="JDBC Call Procedure">
+        <pd:type>com.tibco.plugin.jdbc.JDBCCallActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCCallActivity</pd:resourceType>
+        <pd:x>272</pd:x>
+        <pd:y>78</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <schema>DEV-1</schema>
+            <ProcedureName>CUSTOM_AUTH</ProcedureName>
+            <oraObjects/>
+            <oraTables/>
+            <parameterTypes>
+                <parameter>
+                    <colName>RETURN_VALUE</colName>
+                    <colType>5</colType>
+                    <dataType>-7</dataType>
+                    <typeName>PL/SQL BOOLEAN</typeName>
+                </parameter>
+                <parameter>
+                    <colName>P_USERNAME</colName>
+                    <colType>1</colType>
+                    <dataType>12</dataType>
+                    <typeName>VARCHAR2</typeName>
+                </parameter>
+                <parameter>
+                    <colName>P_PASSWORD</colName>
+                    <colType>1</colType>
+                    <dataType>12</dataType>
+                    <typeName>VARCHAR2</typeName>
+                </parameter>
+            </parameterTypes>
+        </config>
+        <pd:inputBindings>
+            <inputs>
+                <inputSet>
+                    <P_USERNAME>
+                        <xsl:value-of select="'DEV-1'"/>
+                    </P_USERNAME>
+                    <P_PASSWORD>
+                        <xsl:value-of select="'admin'"/>
+                    </P_PASSWORD>
+                </inputSet>
+            </inputs>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>JDBC Call Procedure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Call Procedure</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

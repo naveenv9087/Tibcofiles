@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/EngineTypes">
+    <pd:name>Condiations/Process Definition.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>100</pd:startX>
+    <pd:startY>106</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>742</pd:endX>
+    <pd:endY>127</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1658042748219</pd:targetNamespace>
+    <pd:activity name="Create File">
+        <pd:type>com.tibco.plugin.file.FileCreateActivity</pd:type>
+        <pd:resourceType>ae.activities.FileCreateActivity</pd:resourceType>
+        <pd:x>457</pd:x>
+        <pd:y>34</pd:y>
+        <config>
+            <createMissingDirectories>true</createMissingDirectories>
+        </config>
+        <pd:inputBindings>
+            <pfx:CreateActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="concat($Read-File/pfx:ReadActivityOutputTextClass/fileInfo/fullName,'\Create.txt')"/>
+                </fileName>
+            </pfx:CreateActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Copy File">
+        <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
+        <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
+        <pd:x>454</pd:x>
+        <pd:y>118</pd:y>
+        <config>
+            <createMissingDirectories>true</createMissingDirectories>
+        </config>
+        <pd:inputBindings>
+            <pfx:CopyActivityConfig>
+                <fromFileName>
+                    <xsl:value-of select="'F:\Ellite\readfile.txt'"/>
+                </fromFileName>
+                <toFileName>
+                    <xsl:value-of select="'F:\xlinsurence\copyfile.txt'"/>
+                </toFileName>
+            </pfx:CopyActivityConfig>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Write File">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>465</pd:x>
+        <pd:y>221</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <createMissingDirectories>true</createMissingDirectories>
+            <append>false</append>
+        </config>
+        <pd:inputBindings>
+            <pfx:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="'F:\Ellite\writefile.txt'"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="'This is no matching condtion apply'"/>
+                </textContent>
+            </pfx:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>219</pd:x>
+        <pd:y>105</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <excludeContent>true</excludeContent>
+        </config>
+        <pd:inputBindings>
+            <ns2:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="'F:\Ellite'"/>
+                </fileName>
+            </ns2:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>471</pd:x>
+        <pd:y>321</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat('Error occured on readfile', $_error/ns1:ErrorReport/Msg)"/>
+                </message>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Create File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Copy File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Create File</pd:to>
+        <pd:xpathDescription>CreateFile</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>contains($Read-File/pfx:ReadActivityOutputNoContentClass/fileInfo/fileName,'create')</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Copy File</pd:to>
+        <pd:xpathDescription>Copyfile</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>contains($Read-File/pfx:ReadActivityOutputTextClass/fileInfo/fileName,'copy')</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Write File</pd:to>
+        <pd:xpathDescription>NoMatching</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:xpathDescription>Error</pd:xpathDescription>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-10092442</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

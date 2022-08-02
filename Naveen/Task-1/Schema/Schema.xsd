@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Naveen/Task-1/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Naveen/Task-1/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="Employee_details">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID" type="xs:int"/>
+				<xs:element name="First_Name" type="xs:string"/>
+				<xs:element name="Middle_Name" type="xs:string"/>
+				<xs:element name="Last_Name" type="xs:string"/>
+				<xs:element name="Email" type="xs:string"/>
+				<xs:element name="Date_of_birth" type="xs:date"/>
+				<xs:element name="IsVaccinated" type="xs:boolean"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
